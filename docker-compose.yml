@@ -1,0 +1,20 @@
+
+services:
+  api:
+    build: ./api-node
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+    volumes:
+      - ./api-node:/app
+    restart: unless-stopped
+
+  client:
+    build: ./web-client
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./web-client:/app
+    stdin_open: true
+    tty: true
