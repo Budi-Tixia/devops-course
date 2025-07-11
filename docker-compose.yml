@@ -1,20 +1,19 @@
 
 services:
-  api:
-    build: ./api-node
+  backend:
+    build: ./backend
     ports:
-      - "3001:3001"
+      - '5000:5000'
+    volumes:
+      - ./backend:/app
     environment:
-      - PORT=3001
-    volumes:
-      - ./api-node:/app
-    restart: unless-stopped
+      - NODE_ENV=development
 
-  client:
-    build: ./web-client
+  frontend:
+    build: ./frontend
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
-      - ./web-client:/app
-    stdin_open: true
-    tty: true
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=development
