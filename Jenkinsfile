@@ -12,7 +12,7 @@ pipeline {
             steps {
                 dir('backend') {
                     sh 'npm install'
-                    sh 'npm run build || echo "No build script, skipping..."'
+                    sh 'npm run build || true'
                 }
             }
         }
