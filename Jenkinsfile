@@ -1,30 +1,30 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:18-alpine'
-      args '-u root' // to avoid permission issues
-    }
+  agent any
+
+  environment {
+    BACKEND_DIR = 'backend'
+    FRONTEND_DIR = 'frontend'
   }
 
   stages {
     stage('Checkout') {
       steps {
-        git branch: 'main', url: 'https://github.com/Budi-Tixia/devops-course.git'
+        git 'https://github.com/Budi-Tixia/devops-course.git'
       }
     }
 
     stage('Build Backend') {
       steps {
-        dir('backend') {
+        dir("${env.BACKEND_DIR}") {
           sh 'npm install'
-          sh 'npm run build || true'
+          sh 'npm run build || echo "Skip if not present"'
         }
       }
     }
 
     stage('Build Frontend') {
       steps {
-        dir('frontend') {
+        dir("${env.FRONTEND_DIR}") {
           sh 'npm install'
           sh 'npm run build'
         }
