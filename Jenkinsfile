@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Budi-Tixia/devops-course.git'
+                git branch: 'main', url: 'https://github.com/Budi-Tixia/devops-course.git'
             }
         }
 
