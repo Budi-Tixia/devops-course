@@ -1,28 +1,22 @@
-pipeline {
-    agent {
-        docker {
-            image 'node:18-alpine'
-        }
+node {
+  ws('/var/jenkins_home/workspace/devops-course-pipeline') {
+    stage('Clone') {
+      checkout scm
     }
 
-    options {
-        skipDefaultCheckout(true)
+    stage('Install') {
+      docker.image('node:18-alpine').inside {
+        echo 'Installing dependencies'
+      }
     }
 
-    stages {
-        stage('Install') {
-            steps {
-                sh 'echo Installing dependencies'
-            }
+    stage('Build Backend') {
+      docker.image('node:18-alpine').inside {
+        dir('backend') {
+          sh 'npm install'
+          sh 'npm run build'
         }
-
-        stage('Build Backend') {
-            steps {
-                dir('backend') {
-                    sh 'npm install'
-                    sh 'npm run build'
-                }
-            }
-        }
+      }
     }
+  }
 }
