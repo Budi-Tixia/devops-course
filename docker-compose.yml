@@ -1,19 +1,15 @@
+version: '3.8'
 
 services:
-  backend:
-    build: ./backend
+  jenkins:
+    image: jenkins/jenkins:lts
     ports:
-      - '5000:5000'
+      - "8080:8080"
     volumes:
-      - ./backend:/app
-    environment:
-      - NODE_ENV=development
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock  # ✅ allow Jenkins to talk to Docker
+    user: root  # ✅ allow installing packages like docker CLI
+    restart: unless-stopped
 
-  frontend:
-    build: ./frontend
-    ports:
-      - '3000:3000'
-    volumes:
-      - ./frontend:/app
-    environment:
-      - NODE_ENV=development
+volumes:
+  jenkins_home:
