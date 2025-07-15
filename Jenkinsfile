@@ -1,14 +1,10 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:18-alpine'
-        }
-    }
+    agent any
 
     stages {
         stage('Install') {
             steps {
-                sh 'echo Installing dependencies'
+                echo 'Installing dependencies'
             }
         }
 
