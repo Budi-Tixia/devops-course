@@ -1,14 +1,18 @@
 pipeline {
-    agent any
- 
+    agent {
+        docker {
+            image 'node:18-alpine'
+        }
+    }
+
     options {
-    skipDefaultCheckout(true)
-    }    
+        skipDefaultCheckout(true)
+    }
 
     stages {
         stage('Install') {
             steps {
-                echo 'Installing dependencies'
+                sh 'echo Installing dependencies'
             }
         }
 
